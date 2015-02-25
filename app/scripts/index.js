@@ -5,8 +5,12 @@
 ////////////////////////
 
 var fb = new Firebase('https://exandoh.firebaseio.com/'),
-    createUsers;
-var board = [['a1', 'a2', 'a3'], ['b1', 'b2', 'b3'], ['c1', 'c2', 'c3']];
+    createUsers,
+    board = [['', '', ''], ['', '', ''], ['', '', '']],
+    playerOne = 'X',
+    playerTwo = 'O',
+    playerTurn = true,
+    turns = 0;
 
 
 ////////////////////////////////
@@ -40,23 +44,18 @@ fb.on('child_added', function(snap){
 });
 
 
-$('.output').on('click', function() {
-  // var $td = $($('tbody')).closest('td');
-  $('.clickOutput').html(event.target.className);
-  console.log("You have clicked on the table.")
-})
+// $('.output').on('click', function() {
+//   $('.clickOutput').html(event.target.className);
+//   console.log("You have clicked on the table.")
+// })
 
 $('.newGame').on('click', function() {
   createBoard(board);
   console.log('clicking button!')
 })
 
-// function createNewGame() {
-//   createBoard(board);
-// }
-
 function createBoard(board) {
-  board = [['a1', 'a2', 'a3'], ['b1', 'b2', 'b3'], ['c1', 'c2', 'c3']];
+  board = [['', '', ''], ['', '', ''], ['', '', '']];
   var $table = $('<table class="table"></table>');
   board.forEach(function(row) {
     var $tr = $('<tr></tr>');
@@ -68,6 +67,29 @@ function createBoard(board) {
   $('.output').append($table);
 }
 
+$('.output').on('click', function () {
+  console.log('one click is working!')
+  var index = $('.cell').index(this);
+  $('.clickOutput').text("Index #" + index);
+  if(playerTurn === true) {
+    $('.cell').append(playerOne);
+    playerTurn = false;
+    turns += 1;
+    turnCount();
+  }
+  else {
+    $('.cell').append(playerTwo);
+    playerTurn = true;
+    turns  += 1;
+    turnCount();
+  }
+})
+
+function turnCount() {
+  if (turns === 9) {
+    $('.clickOutput').append('<h1>GAME OVER!!!</h1>')
+  }
+}
 
   //if authenticated, go to app page
 
