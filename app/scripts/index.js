@@ -14,19 +14,16 @@ var fb = new Firebase('https://exandoh.firebaseio.com/'),
 
 
   $('#createUser').click(function(event){
-    console.log('button clicked')
     event.preventDefault();
 
     createUsers = {
         username: $('#newUser').val()
       }
-    console.log(createUsers);
      addUser(createUsers, function(data){});
   });
 
   function addUser(data, cb) {
-    var addUserToDB = fb.push(data);
-    cb(addUserToDB)
+    cb(fb.push(data));
   }
 
   //if authenticated, go to app page
