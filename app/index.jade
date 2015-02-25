@@ -10,8 +10,14 @@ html(lang='en-US')
       <!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
       .container
-        .row
+        .row.h1
           h1 EX-And-OH
+        .row.loginForm
+          form
+            input(type="email" value="username" placeholder="user@gmail.com" id="loginEmail" required)
+            input(type="password" value="password" placeholder="*********" id="loginPassword" required)
+            input(type="button" value="Login" id="#loginButton")
+            input(type="button" value="Register" id="#registerButton")
 
         .row
           table
@@ -28,7 +34,6 @@ html(lang='en-US')
                 td
                 td
                 td
-
 
        .row
           .output
