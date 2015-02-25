@@ -6,6 +6,7 @@
 
 var fb = new Firebase('https://exandoh.firebaseio.com/'),
     createUsers;
+var board = [['a1', 'a2', 'a3'], ['b1', 'b2', 'b3'], ['c1', 'c2', 'c3']];
 
 
 ////////////////////////////////
@@ -39,16 +40,33 @@ fb.on('child_added', function(snap){
 });
 
 
-$('.table').on('click', function() {
+$('.output').on('click', function() {
   // var $td = $($('tbody')).closest('td');
-  $('.output').html(event.target.className);
+  $('.clickOutput').html(event.target.className);
   console.log("You have clicked on the table.")
 })
 
-  function createNewGame() {
-  }
+$('.newGame').on('click', function() {
+  createBoard(board);
+  console.log('clicking button!')
+})
 
+// function createNewGame() {
+//   createBoard(board);
+// }
 
+function createBoard(board) {
+  board = [['a1', 'a2', 'a3'], ['b1', 'b2', 'b3'], ['c1', 'c2', 'c3']];
+  var $table = $('<table class="table"></table>');
+  board.forEach(function(row) {
+    var $tr = $('<tr></tr>');
+    row.forEach(function(cell) {
+      $tr.append('<td class="cell">' + cell + '</td>');
+    });
+    $table.append($tr);
+  });
+  $('.output').append($table);
+}
 
 
   //if authenticated, go to app page
