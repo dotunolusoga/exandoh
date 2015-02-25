@@ -14,12 +14,11 @@ html(lang='en-US')
           h1 EX-And-OH
         .row.loginForm
           form
-            input(type="email" value="username" placeholder="user@gmail.com" id="loginEmail" required)
-            input(type="password" value="password" placeholder="*********" id="loginPassword" required)
-            input(type="button" value="Login" id="#loginButton")
-            input(type="button" value="Register" id="#registerButton")
+            label(for="username") Username
+            input(type="text" id="newUser" required)
+            input(type="button" value="Play" id="createUser")
 
-        .row
+        .row.gameBoard.hidden
           table
             tbody
               tr
