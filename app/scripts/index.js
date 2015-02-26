@@ -5,7 +5,7 @@
 ////////////////////////
 
 var fb = new Firebase('https://exandoh.firebaseio.com/'),
-    createUsers,
+    createGame,
     board = ['', '', '', '', '', '', '', '', ''],
     playerOne = 'X',
     playerTwo = 'O',
@@ -15,55 +15,43 @@ var fb = new Firebase('https://exandoh.firebaseio.com/'),
 
 
 ////////////////////////////////
-// Create Player //////////////
+// Create GAME //////////////
 ////////////////////////////////
-
-
-  $('#createGame').click(function(event){
-    event.preventDefault();
+$('#startGame').click(function(event){
+  event.preventDefault();
+  createBoard(board);
 
     createGame = {
-        username: $('#newUser').val()
-      }
-     addUser(createUsers, function(data){});
-     $('.welcomePlayers').attr('data-uuid', data.username);
-  });
+                    player1: $('#player1').val(),
+                    player2: $('#player2').val(),
+                    board: board
+    }
 
-  $('#joinGame').click(function(event){
-    event.preventDefault();
-
-    joinGame = {
-        username: $('#newUser').val()
-      }
-     addUser(createUsers, function(data){});
-     $('.welcomePlayers').attr('data-uuid', data.username);
-  });
-
-  function addUser(data, cb) {
-    cb(fb.push(data));
-  }
-
-//APPEND DATA TO PAGE
-function appendPlayersToPage(data) {
-  $('.welcomePlayers').append('<div> Welcome ' + data.username + '</div>');
-}
-
-// function createGameRoom {
-//   if
-// }
-
-//PULL DATA FROM FIREBASE
-fb.on('child_added', function(snap){
-  var data = snap.val();
-  appendPlayersToPage(data);
+  addPlayer(createGame, function(data){});
 });
 
-$('.newGame').on('click', function() {
-  createBoard(board);
-  $('td').empty();
-  $('.clickOutput').empty();
-  console.log('clicking button!')
-})
+//PUSH DATA TO FIREBASE//
+function addPlayer(data, cb) {
+  cb(fb.push(data));
+}
+
+//APPEND DATA TO PAGE//
+function appendDataToPage(data) {
+  $('.welcomePlayers').append('<div> Welcome ' + data.player1 + '</div><div>Welcome ' + data.player2 + '</div>');
+}
+
+//PULL DATA FROM FIREBASE//
+fb.on('child_added', function(snap){
+  var data = snap.val();
+  appendDataToPage(data);
+});
+
+// $('.newGame').on('click', function() {
+//   createBoard(board);
+//   $('td').empty();
+//   $('.clickOutput').empty();
+//   console.log('clicking button!')
+// })
 
 function createBoard(board) {
   board = [['', '', ''], ['', '', ''], ['', '', '']];
@@ -75,10 +63,10 @@ function createBoard(board) {
     });
     $table.append($tr);
   });
-  $('.output').append($table);
+  $('.board').append($table);
 }
 
-$('.output').one('click', function() {
+$('.board').one('click', function() {
   console.log('one click is working!')
   findCellIndex();
 })
@@ -122,41 +110,6 @@ function turnCount() {
   || (board[0] === board[4] && board[0] === board[8] && board[0] === "O")
   || (board[2] === board[4] && board[2] === board[6] && board[2] === "O")) {
     $('.clickOutput').append('<h1>PLAYER TWO WINS!!!</h1>');
-
-
-  // if (board[0] && board[1] && board[2] === "X") {
-    
-  // } else if (board[3] && board[4] && board[5] === "X") {
-  //   $('.clickOutput').append('<h1>PLAYER ONE WINS!!!</h1>');
-  // } else if (board[6] && board[7] && board[8] === "X") {
-  //   $('.clickOutput').append('<h1>PLAYER ONE WINS!!!</h1>');
-  // } else if (board[0] && board[3] && board[6] === "X") {
-  //   $('.clickOutput').append('<h1>PLAYER ONE WINS!!!</h1>');
-  // } else if (board[1] && board[4] && board[7] === "X") {
-  //   $('.clickOutput').append('<h1>PLAYER ONE WINS!!!</h1>');
-  // } else if (board[2] && board[5] && board[8] === "X") {
-  //   $('.clickOutput').append('<h1>PLAYER ONE WINS!!!</h1>');
-  // } else if (board[0] && board[4] && board[8] === "X") {
-  //   $('.clickOutput').append('<h1>PLAYER ONE WINS!!!</h1>');
-  // } else if (board[2] && board[4] && board[6] === "X") {
-  //   $('.clickOutput').append('<h1>PLAYER ONE WINS!!!</h1>');
-
-  // } else if(board[0] && board[1] && board[2] === "O") {
-  //   $('.clickOutput').append('<h1>PLAYER TWO WINS!!!</h1>');
-  // } else if (board[3] && board[4] && board[5] === "O") {
-  //   $('.clickOutput').append('<h1>PLAYER TWO WINS!!!</h1>');
-  // } else if (board[6] && board[7] && board[8] === "O") {
-  //   $('.clickOutput').append('<h1>PLAYER TWO WINS!!!</h1>');
-  // } else if (board[0] && board[3] && board[6] === "O") {
-  //   $('.clickOutput').append('<h1>PLAYER TWO WINS!!!</h1>');
-  // } else if (board[1] && board[4] && board[7] === "O") {
-  //   $('.clickOutput').append('<h1>PLAYER TWO WINS!!!</h1>');
-  // } else if (board[2] && board[5] && board[8] === "O") {
-  //   $('.clickOutput').append('<h1>PLAYER TWO WINS!!!</h1>');
-  // } else if (board[0] && board[4] && board[8] === "O") {
-  //   $('.clickOutput').append('<h1>PLAYER TWO WINS!!!</h1>');
-  // } else if (board[2] && board[4] && board[6] === "O") {
-  //   $('.clickOutput').append('<h1>PLAYER TWO WINS!!!</h1>');
 
   } else if(turns === 9) {
     $('.clickOutput').append('<h1>GAME OVER!!!</h1>');

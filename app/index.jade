@@ -14,21 +14,19 @@ html(lang='en-US')
           h1 EX-And-OH
         .row.loginForm
           form
-            label(for="username") Player Name
-            input(type="text" id="newUser" required)
-            input(type="button" value="Start Game" id="createGame")
-            input(type="button" value="Join Game" id="joinGame")
+            label(for="username") Player 1
+            input(type="text" id="player1" required)
+            label(for="username") Player 2
+            input(type="text" id="player2" required)
+            input(type="button" value="Start Game" id="startGame")
 
         .row.welcomePlayers
-
-        .row.gameBoard
-          button.newGame New Game
 
         .row
           .clickOutput
 
         .row
-          .output
+          .board
 
 
 
