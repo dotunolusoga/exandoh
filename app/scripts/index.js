@@ -67,10 +67,9 @@ function createBoard(board) {
   $('.output').append($table);
 }
 
-$('.output').on('click', function () {
+$('.output').on('click', function() {
   console.log('one click is working!')
-  var index = $('.cell').index(this);
-  $('.clickOutput').text("Index #" + index);
+  findCellIndex();
   if(playerTurn === true) {
     $('.cell').append(playerOne);
     playerTurn = false;
@@ -84,6 +83,14 @@ $('.output').on('click', function () {
     turnCount();
   }
 })
+
+function findCellIndex(){
+  $('td').on('click', function(){
+    var index = $('td').index(this);
+    $('.clickOutput').text("Index #" + index);
+    console.log('td click working!')
+  });
+}
 
 function turnCount() {
   if (turns === 9) {
