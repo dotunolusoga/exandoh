@@ -70,24 +70,35 @@ function createBoard(board) {
 $('.output').on('click', function() {
   console.log('one click is working!')
   findCellIndex();
-  if(playerTurn === true) {
-    $('.cell').append(playerOne);
-    playerTurn = false;
-    turns += 1;
-    turnCount();
-  }
-  else {
-    $('.cell').append(playerTwo);
-    playerTurn = true;
-    turns  += 1;
-    turnCount();
-  }
+//   if(playerTurn === true) {
+//     $('td').append(playerOne);
+//     playerTurn = false;
+//     turns += 1;
+//     turnCount();
+//   }
+//   else {
+//     $('td').append(playerTwo);
+//     playerTurn = true;
+//     turns  += 1;
+//     turnCount();
+//   }
 })
 
 function findCellIndex(){
-  $('td').on('click', function(){
+  $('td').one('click', function(){
     var index = $('td').index(this);
-    $('.clickOutput').text("Index #" + index);
+    if(playerTurn === true) {
+      $(this).text(playerOne);
+      playerTurn = false;
+      turns += 1;
+      turnCount();
+    }
+    else {
+      $(this).text(playerTwo);
+      playerTurn = true;
+      turns  += 1;
+      turnCount();
+   }
     console.log('td click working!')
   });
 }
