@@ -27,7 +27,9 @@ $('#startGame').click(function(event){
                     board: board
     }
 
-  addPlayer(createGame, function(data){});
+  addPlayer(createGame, function(uuid, data){
+    $('.board').attr('data-uuid', data.name);
+  });
 });
 
 //PUSH DATA TO FIREBASE//
@@ -37,7 +39,7 @@ function addPlayer(data, cb) {
 
 //APPEND DATA TO PAGE//
 function appendDataToPage(data) {
-  $('.welcomePlayers').append('<div> Welcome ' + data.player1 + '</div><div>Welcome ' + data.player2 + '</div>');
+  $('.welcomePlayers').append('<div> Welcome ' + data.player1 + '</div><div> Welcome ' + data.player2 + '</div>');
 }
 
 //PULL DATA FROM FIREBASE//
@@ -76,7 +78,8 @@ function findCellIndex(){
     index = $('td').index(this);
     if(playerTurn === true) {
       $(this).append(playerOne);
-      board.splice(index, 1, playerOne);
+      var move = board.splice(index, 1, playerOne);
+      //fb.update()
       playerTurn = false;
     }
     else {
