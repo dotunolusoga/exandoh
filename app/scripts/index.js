@@ -104,7 +104,7 @@ function findCellIndex(){
 
 function turnCount() {
   if (board[0] && board[3] && board[6] === "X") {
-    $('.clickOutput').append('<h1>Player One Wins!</h1>');
+    $('.clickOutput').append('<h1>PLAYER ONE WINS!!!</h1>');
   } else if (turns === 9) {
     $('.clickOutput').append('<h1>GAME OVER!!!</h1>');
   }
