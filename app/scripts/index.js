@@ -18,10 +18,20 @@ var fb = new Firebase('https://exandoh.firebaseio.com/'),
 ////////////////////////////////
 
 
-  $('#createUser').click(function(event){
+  $('#createGame').click(function(event){
     event.preventDefault();
 
-    createUsers = {
+    createGame = {
+        username: $('#newUser').val()
+      }
+     addUser(createUsers, function(data){});
+     $('.welcomePlayers').attr('data-uuid', data.username);
+  });
+
+  $('#joinGame').click(function(event){
+    event.preventDefault();
+
+    joinGame = {
         username: $('#newUser').val()
       }
      addUser(createUsers, function(data){});
@@ -35,6 +45,10 @@ var fb = new Firebase('https://exandoh.firebaseio.com/'),
 //APPEND DATA TO PAGE
 function appendPlayersToPage(data) {
   $('.welcomePlayers').append('<div> Welcome ' + data.username + '</div>');
+}
+
+function createGameRoom {
+  if
 }
 
 //PULL DATA FROM FIREBASE
@@ -51,6 +65,8 @@ fb.on('child_added', function(snap){
 
 $('.newGame').on('click', function() {
   createBoard(board);
+  $('td').empty();
+  $('.clickOutput').empty();
   console.log('clicking button!')
 })
 
