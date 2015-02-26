@@ -6,7 +6,7 @@
 
 var fb = new Firebase('https://exandoh.firebaseio.com/'),
     createUsers,
-    board = [['', '', ''], ['', '', ''], ['', '', '']],
+    board = ['', '', '', '', '', '', '', '', ''],
     playerOne = 'X',
     playerTwo = 'O',
     playerTurn = true,
@@ -88,10 +88,12 @@ function findCellIndex(){
     index = $('td').index(this);
     if(playerTurn === true) {
       $(this).append(playerOne);
+      board.splice(index, 1, playerOne);
       playerTurn = false;
     }
     else {
       $(this).append(playerTwo);
+      board.splice(index, 1, playerTwo);
       playerTurn = true;
     };
     turns += 1;
@@ -101,7 +103,7 @@ function findCellIndex(){
 }
 
 function turnCount() {
-  if (document.getElementById("cell").innerHTML === 'X' && index === 0) {
+  if (board[0] && board[3] && board[6] === "X") {
     $('.clickOutput').append('<h1>Player One Wins!</h1>');
   } else if (turns === 9) {
     $('.clickOutput').append('<h1>GAME OVER!!!</h1>');
