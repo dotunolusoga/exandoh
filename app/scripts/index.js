@@ -10,7 +10,8 @@ var fb = new Firebase('https://exandoh.firebaseio.com/'),
     playerOne = 'X',
     playerTwo = 'O',
     playerTurn = true,
-    turns = 0;
+    turns = 0,
+    index;
 
 
 ////////////////////////////////
@@ -47,21 +48,15 @@ function appendPlayersToPage(data) {
   $('.welcomePlayers').append('<div> Welcome ' + data.username + '</div>');
 }
 
-function createGameRoom {
-  if
-}
+// function createGameRoom {
+//   if
+// }
 
 //PULL DATA FROM FIREBASE
 fb.on('child_added', function(snap){
   var data = snap.val();
   appendPlayersToPage(data);
 });
-
-
-// $('.output').on('click', function() {
-//   $('.clickOutput').html(event.target.className);
-//   console.log("You have clicked on the table.")
-// })
 
 $('.newGame').on('click', function() {
   createBoard(board);
@@ -76,7 +71,7 @@ function createBoard(board) {
   board.forEach(function(row) {
     var $tr = $('<tr></tr>');
     row.forEach(function(cell) {
-      $tr.append('<td class="cell">' + cell + '</td>');
+      $tr.append('<td id="cell">' + cell + '</td>');
     });
     $table.append($tr);
   });
@@ -90,24 +85,26 @@ $('.output').one('click', function() {
 
 function findCellIndex(){
   $('td').one('click', function(){
-    var index = $('td').index(this);
+    index = $('td').index(this);
     if(playerTurn === true) {
-      $(this).text(playerOne);
+      $(this).append(playerOne);
       playerTurn = false;
     }
     else {
-      $(this).text(playerTwo);
+      $(this).append(playerTwo);
       playerTurn = true;
     };
     turns += 1;
     turnCount();
-    console.log('td click working!')
+    console.log(index)
   });
 }
 
 function turnCount() {
-  if (turns === 9) {
-    $('.clickOutput').append('<h1>GAME OVER!!!</h1>')
+  if (document.getElementById("cell").innerHTML === 'X' && index === 0) {
+    $('.clickOutput').append('<h1>Player One Wins!</h1>');
+  } else if (turns === 9) {
+    $('.clickOutput').append('<h1>GAME OVER!!!</h1>');
   }
 }
 
