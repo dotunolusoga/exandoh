@@ -4,7 +4,7 @@
 // Selector variables //
 ////////////////////////
 
-var fb = new Firebase('https://exandoh.firebaseio.com/'),
+var fb = new Firebase('https://exandoh.firebaseio.com/game'),
     createGame,
     board = ['', '', '', '', '', '', '', '', ''],
     playerOne = 'X',
@@ -24,17 +24,17 @@ $('#startGame').click(function(event){
     createGame = {
                     player1: $('#player1').val(),
                     player2: $('#player2').val(),
-                    board: board
     }
 
-  addPlayer(createGame, function(uuid, data){
-    $('.board').attr('data-uuid', data.name);
+  addPlayer(createGame, function(data){
   });
+  $('#player1').val('');
+  $('#player2').val('');
 });
 
 //PUSH DATA TO FIREBASE//
 function addPlayer(data, cb) {
-  cb(fb.push(data));
+  cb(fb.set(data));
 }
 
 //APPEND DATA TO PAGE//
@@ -43,7 +43,7 @@ function appendDataToPage(data) {
 }
 
 //PULL DATA FROM FIREBASE//
-fb.on('child_added', function(snap){
+fb.on('value', function(snap){
   var data = snap.val();
   appendDataToPage(data);
 });
@@ -78,8 +78,8 @@ function findCellIndex(){
     index = $('td').index(this);
     if(playerTurn === true) {
       $(this).append(playerOne);
-      var move = board.splice(index, 1, playerOne);
-      //fb.update()
+      board.splice(index, 1, playerOne);
+      fb.update({board: board});
       playerTurn = false;
     }
     else {
